@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { useCurrentPage } from "../../store/currentPage";
 
-const pages = ["Home", "About", "Skills", "Projects", "contact me"] as const;
+const pages = ["Home", "About", "Skills", "Projects", "Contact me"] as const;
 
 const Header: React.FC<{}> = () => {
   const [pageIndex, setPageIndex] = useCurrentPage();
