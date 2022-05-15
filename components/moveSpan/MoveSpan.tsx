@@ -13,12 +13,13 @@ const MoveSpan: React.FC<MoveSpanProps> = ({ text, fontSize }) => {
         repeat={-1}
         target={
           <div>
-            <p css={fontStyle(fontSize)}>{text}</p>
-            <p css={fontStyle(fontSize)}>{text}</p>
+            <p css={fontStyle(fontSize)}>
+              {text} <br /> {text}
+            </p>
           </div>
         }
       >
-        <Tween to={{ y: "-50%" }} duration={1.5} />
+        <Tween from={{ y: "-50%" }} to={{ y: "0%" }} duration={1.5} />
         <Tween duration={3} />
       </Timeline>
     </div>
@@ -30,7 +31,7 @@ const wrapperStyle = (fontSize: string) => css`
   display: inline-block;
   overflow: hidden;
   font-size: ${fontSize};
-  height: ${fontSize};
+  height: 181px;
 `;
 const fontStyle = (fontSize: string) => css`
   font-size: ${fontSize};
