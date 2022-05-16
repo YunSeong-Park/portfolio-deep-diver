@@ -7,11 +7,12 @@ const Heuristic: React.FC<{}> = () => {
     <Scene triggerHook="onLeave" pin duration={2000}>
       {(progress: number) => {
         return (
-          <div css={[rootStyle, progress === 0 && blockStyle]}>
+          <div css={[rootStyle, progress === 0 && hiddenStyle]}>
             <Timeline
               totalProgress={progress}
               paused
               target={<div css={blackoutWrapperStyle} />}
+              duration={1}
             >
               <Tween to={{ "--size": "30%", "--sharpness": "10%" }} />
               <Tween to={{ "--x": "700px" }} />
@@ -35,8 +36,8 @@ const rootStyle = css`
   position: relative;
 `;
 
-const blockStyle = css`
-  display: none;
+const hiddenStyle = css`
+  visibility: hidden;
 `;
 
 const blackoutWrapperStyle = css`
