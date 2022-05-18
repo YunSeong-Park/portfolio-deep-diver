@@ -1,10 +1,11 @@
 import { css } from "@emotion/react";
 import MoveDownIcon from "../icon/move-down-icon";
+import WaveSpan from "../waveSpan/WaveSpan";
 
 const Advice: React.FC<{}> = () => {
   return (
     <div css={adviceStyle}>
-      <span>Scroll to discover</span>
+      <WaveSpan text="Scroll to discover" />
       <MoveDownIcon />
     </div>
   );
