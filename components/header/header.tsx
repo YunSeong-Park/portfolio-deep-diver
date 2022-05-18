@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useCurrentPage } from "../../store/currentPage";
+import { useCurrentPage } from "../../state/currentPage";
 
 const pages = ["Home", "About", "Skills", "Projects", "Contact me"] as const;
 

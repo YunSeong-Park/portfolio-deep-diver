@@ -1,4 +1,4 @@
-import { atom, useRecoilState } from "recoil";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
 
 const currentPage = atom({
   key: "currentPage",
@@ -6,3 +6,5 @@ const currentPage = atom({
 });
 
 export const useCurrentPage = () => useRecoilState(currentPage);
+
+export const useCurrentPageValue = () => useRecoilValue(currentPage);

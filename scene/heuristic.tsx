@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
-import { Timeline, Tween } from "react-gsap";
+
 import { Scene } from "react-scrollmagic";
 
 const Heuristic: React.FC<{}> = () => {
@@ -25,6 +25,9 @@ const Heuristic: React.FC<{}> = () => {
         "--x": "300px",
       })
       .to(blackoutWrapperEl.current, {
+        "--x": "1000px",
+      })
+      .to(blackoutWrapperEl.current, {
         "--size": "200%",
         "--sharpness": "100%",
       })
@@ -34,7 +37,7 @@ const Heuristic: React.FC<{}> = () => {
       });
   }, []);
   return (
-    <Scene triggerHook="onLeave" pin duration={2000}>
+    <Scene triggerHook="onLeave" pin duration={3000}>
       {(progress: number) => {
         console.log(progress);
         tl.current.totalProgress(progress / 2);
