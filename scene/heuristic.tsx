@@ -1,26 +1,48 @@
 import { css } from "@emotion/react";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 import { Timeline, Tween } from "react-gsap";
 import { Scene } from "react-scrollmagic";
 
 const Heuristic: React.FC<{}> = () => {
+  const tl = useRef<gsap.core.Timeline>(gsap.timeline({ repeat: 0 }));
+
+  const blackoutWrapperEl = useRef<HTMLDivElement>(null);
+  const textEl = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    tl.current.pause();
+
+    tl.current
+      .to(blackoutWrapperEl.current, {
+        "--size": "30%",
+        "--sharpness": "10%",
+      })
+      .to(blackoutWrapperEl.current, {
+        "--x": "700px",
+      })
+      .to(blackoutWrapperEl.current, {
+        "--x": "300px",
+      })
+      .to(blackoutWrapperEl.current, {
+        "--size": "200%",
+        "--sharpness": "100%",
+      })
+      .to(blackoutWrapperEl.current, {
+        "--size": "0%",
+        "--sharpness": "0%",
+      });
+  }, []);
   return (
     <Scene triggerHook="onLeave" pin duration={2000}>
       {(progress: number) => {
+        console.log(progress);
+        tl.current.totalProgress(progress / 2);
         return (
           <div css={[rootStyle, progress === 0 && hiddenStyle]}>
-            <Timeline
-              totalProgress={progress}
-              paused
-              target={<div css={blackoutWrapperStyle} />}
-              duration={1}
-            >
-              <Tween to={{ "--size": "30%", "--sharpness": "10%" }} />
-              <Tween to={{ "--x": "700px" }} />
-              <Tween to={{ "--x": "300px" }} />
-              <Tween to={{ "--size": "200%", "--sharpness": "100%" }} />
-              <Tween to={{ "--size": "0%", "--sharpness": "0%" }} />
-            </Timeline>
-            <h2 css={titleStyle}>
+            <div css={blackoutWrapperStyle} ref={blackoutWrapperEl} />
+
+            <h2 ref={textEl} css={titleStyle}>
               Design is a <br /> Heuristic process
             </h2>
           </div>
