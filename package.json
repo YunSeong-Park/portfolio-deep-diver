@@ -11,12 +11,15 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "gsap": "^3.10.4",
+    "mobx": "^6.5.0",
+    "mobx-react": "^7.4.0",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-gsap": "^3.2.1",
     "react-scrollmagic": "^2.3.0",
-    "recoil": "^0.7.3-alpha.2"
+    "recoil": "^0.7.3-alpha.2",
+    "scrollmagic": "^2.0.8"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.9.2",

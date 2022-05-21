@@ -1,42 +1,50 @@
 import { css } from "@emotion/react";
+import { useEffect, useRef } from "react";
 import { Tween } from "react-gsap";
-import { Scene } from "react-scrollmagic";
+import { Controller, Scene } from "react-scrollmagic";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import MoveSpan from "../components/moveSpan/MoveSpan";
+import { Page, usePageManager, useSetPage } from "../pages/util";
+
+const key = "intro";
 
 interface IntroProps {}
 
 const Intro: React.FC<IntroProps> = () => {
+  const rootEl = useSetPage(key);
+
   return (
-    <Scene triggerHook="onLeave" pin duration={300}>
-      {(progress: number) => {
-        return (
-          <div css={rootStyle}>
-            <Tween
-              to={{ opacity: 0, y: "-100px" }}
-              paused
-              totalProgress={progress}
-            >
-              <div css={phraseStyle}>
-                <p css={subTitleStyle}>
-                  "The Standard <br /> of completion in out opinion"
-                </p>
-                <div css={titleWrapperStyle}>
-                  <span css={titleStyle}>
-                    <MoveSpan text="Deep " fontSize="154px" />
-                    <span> &nbsp;Diver</span>
-                  </span>
+    <div ref={rootEl}>
+      <Scene triggerHook="onLeave" pin duration={300}>
+        {(progress: number) => {
+          return (
+            <div css={rootStyle}>
+              <Tween
+                to={{ opacity: 0, y: "-100px" }}
+                paused
+                totalProgress={progress}
+              >
+                <div css={phraseStyle}>
+                  <p css={subTitleStyle}>
+                    "The Standard <br /> of completion in out opinion"
+                  </p>
+                  <div css={titleWrapperStyle}>
+                    <span css={titleStyle}>
+                      <MoveSpan text="Deep " fontSize="154px" />
+                      <span> &nbsp;Diver</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Tween>
-          </div>
-        );
-      }}
-    </Scene>
+              </Tween>
+            </div>
+          );
+        }}
+      </Scene>
+    </div>
   );
 };
 
-export default Intro;
+export default { component: Intro, key };
 
 const rootStyle = css`
   position: relative;

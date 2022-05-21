@@ -1,10 +1,12 @@
 import { css } from "@emotion/react";
+import { usePageManager } from "../../pages/util";
 import { useCurrentPage } from "../../state/currentPage";
 
 const pages = ["Home", "About", "Skills", "Projects", "Contact me"] as const;
 
 const Header: React.FC<{}> = () => {
   const [pageIndex, setPageIndex] = useCurrentPage();
+  const pageManager = usePageManager();
   return (
     <header css={rootStyle}>
       <h2 css={titleStyle}>title</h2>
@@ -15,6 +17,7 @@ const Header: React.FC<{}> = () => {
               css={[fontStyle, pageIndex === i && activeFontStyle]}
               onClick={() => {
                 setPageIndex(i);
+                pageManager.goPage("intro");
               }}
             >
               {page}
