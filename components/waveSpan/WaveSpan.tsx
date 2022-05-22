@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 interface WaveSpanProps {
@@ -21,8 +21,6 @@ const WaveSpan: React.FC<WaveSpanProps> = ({ text }) => {
       tl.current.to(charEl, { opacity: 1, duration: 0.2 }, ">-0.33");
       tl.current.to(charEl, { opacity: 0.7, duration: 0.2 }, ">");
     });
-
-    tl.current.yoyo();
   }, []);
 
   return (
@@ -39,8 +37,8 @@ const WaveSpan: React.FC<WaveSpanProps> = ({ text }) => {
         }
       `}
     >
-      {text.split("").map((char) => {
-        return <div>{char}</div>;
+      {text.split("").map((char, i) => {
+        return <div key={`wave${char} ${i}`}>{char}</div>;
       })}
     </div>
   );

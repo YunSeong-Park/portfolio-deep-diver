@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           <Header pages={pageInfo} />
           <Advice />
           {pageInfo.map((page) => (
-            <page.component pageKey={page.key} />
+            <page.component pageKey={page.key} key={page.key} />
           ))}
         </div>
       </PageManagerContext.Provider>

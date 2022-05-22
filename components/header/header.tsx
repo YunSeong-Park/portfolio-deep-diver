@@ -9,14 +9,12 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ pages }) => {
   const pageManager = usePageManager();
 
-  console.log(pageManager.currentPage());
-
   return (
     <header css={rootStyle}>
       <h2 css={titleStyle}>title</h2>
       <ul css={listStyle}>
         {pages.map((page, i) => (
-          <li css={itemStyle}>
+          <li css={itemStyle} key={page.key}>
             <span
               css={[
                 fontStyle,
