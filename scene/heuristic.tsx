@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
-
 import { Scene } from "react-scrollmagic";
 import { PageComponentProps, useSetPage } from "../pages/util";
 
@@ -9,9 +8,35 @@ interface HeuristicProps extends PageComponentProps {}
 
 const Heuristic: React.FC<HeuristicProps> = ({ pageKey }) => {
   const rootEl = useSetPage(pageKey);
-  const tl = useRef<gsap.core.Timeline>(gsap.timeline({ repeat: 0 }));
 
+  const { blackoutWrapperEl, setProgress } = useTween();
+
+  const duration = 2000;
+
+  return (
+    <div ref={rootEl} css={wrapperStyle(duration)}>
+      <Scene triggerHook="onLeave" pin duration={duration}>
+        {(progress: number) => {
+          setProgress(progress);
+          return (
+            <div css={[rootStyle, [0, 1].includes(progress) && hiddenStyle]}>
+              <div css={blackoutWrapperStyle} ref={blackoutWrapperEl} />
+
+              <h2 css={titleStyle}>
+                Design is a <br /> Heuristic process
+              </h2>
+            </div>
+          );
+        }}
+      </Scene>
+    </div>
+  );
+};
+
+const useTween = () => {
   const blackoutWrapperEl = useRef<HTMLDivElement>(null);
+
+  const tl = useRef<gsap.core.Timeline>(gsap.timeline({ repeat: 0 }));
 
   useEffect(() => {
     tl.current.pause();
@@ -39,27 +64,19 @@ const Heuristic: React.FC<HeuristicProps> = ({ pageKey }) => {
         "--sharpness": "0%",
       });
   }, []);
-  return (
-    <div ref={rootEl}>
-      <Scene triggerHook="onLeave" pin duration="200%">
-        {(progress: number) => {
-          tl.current.totalProgress(progress / 2);
-          return (
-            <div css={[rootStyle, progress === 0 && hiddenStyle]}>
-              <div css={blackoutWrapperStyle} ref={blackoutWrapperEl} />
 
-              <h2 css={titleStyle}>
-                Design is a <br /> Heuristic process
-              </h2>
-            </div>
-          );
-        }}
-      </Scene>
-    </div>
-  );
+  const setProgress = (progress: number) => {
+    tl.current.progress(progress / 2);
+  };
+
+  return { blackoutWrapperEl, setProgress };
 };
 
 export default Heuristic;
+
+const wrapperStyle = (height: number) => css`
+  height: ${height}px;
+`;
 
 const rootStyle = css`
   position: relative;
