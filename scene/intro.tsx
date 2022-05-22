@@ -11,38 +11,42 @@ interface IntroProps extends PageComponentProps {}
 const Intro: React.FC<IntroProps> = ({ pageKey }) => {
   const rootEl = useSetPage(pageKey);
 
+  const duration = 300;
+
   return (
-    <div ref={rootEl}>
-      <Scene triggerHook="onLeave" pin duration={300}>
-        {(progress: number) => {
-          return (
-            <div css={rootStyle}>
-              <Tween
-                to={{ opacity: 0, y: "-100px" }}
-                paused
-                totalProgress={progress}
-              >
-                <div css={phraseStyle}>
-                  <p css={subTitleStyle}>
-                    "The Standard <br /> of completion in out opinion"
-                  </p>
-                  <div css={titleWrapperStyle}>
-                    <span css={titleStyle}>
-                      <MoveSpan text="Deep " fontSize="154px" />
-                      <span> &nbsp;Diver</span>
-                    </span>
-                  </div>
+    <div ref={rootEl} css={wrapperStyle(duration)}>
+      <Scene triggerHook="onLeave" pin duration={duration}>
+        {(progress: number) => (
+          <div css={rootStyle}>
+            <Tween
+              to={{ opacity: 0, y: "-100px" }}
+              paused
+              totalProgress={progress}
+            >
+              <div css={phraseStyle}>
+                <p css={subTitleStyle}>
+                  "The Standard <br /> of completion in out opinion"
+                </p>
+                <div css={titleWrapperStyle}>
+                  <span css={titleStyle}>
+                    <MoveSpan text="Deep " fontSize="154px" />
+                    <span> &nbsp;Diver</span>
+                  </span>
                 </div>
-              </Tween>
-            </div>
-          );
-        }}
+              </div>
+            </Tween>
+          </div>
+        )}
       </Scene>
     </div>
   );
 };
 
 export default Intro;
+
+const wrapperStyle = (height: number) => css`
+  height: ${height}px;
+`;
 
 const rootStyle = css`
   position: relative;
