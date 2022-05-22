@@ -1,18 +1,21 @@
 import { css } from "@emotion/react";
 import MoveDownIcon from "../icon/move-down-icon";
 import WaveSpan from "../waveSpan/WaveSpan";
-import { useCurrentPageValue } from "../../state/currentPage";
+
+import { usePageManager } from "../../pages/util";
+import { observer } from "mobx-react";
 const Advice: React.FC<{}> = () => {
-  const currentPage = useCurrentPageValue();
+  const pageManager = usePageManager();
+
   return (
-    <div css={[adviceStyle, currentPage !== 0 && noneStyle]}>
+    <div css={[adviceStyle, pageManager.currentPage() !== 0 && noneStyle]}>
       <WaveSpan text="Scroll to discover" />
       <MoveDownIcon />
     </div>
   );
 };
 
-export default Advice;
+export default observer(Advice);
 
 const adviceStyle = css`
   position: fixed;

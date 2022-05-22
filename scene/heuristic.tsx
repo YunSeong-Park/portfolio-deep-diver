@@ -3,12 +3,15 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 
 import { Scene } from "react-scrollmagic";
+import { PageComponentProps, useSetPage } from "../pages/util";
 
-const Heuristic: React.FC<{}> = () => {
+interface HeuristicProps extends PageComponentProps {}
+
+const Heuristic: React.FC<HeuristicProps> = ({ pageKey }) => {
+  const rootEl = useSetPage(pageKey);
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ repeat: 0 }));
 
   const blackoutWrapperEl = useRef<HTMLDivElement>(null);
-  const textEl = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     tl.current.pause();
@@ -37,21 +40,22 @@ const Heuristic: React.FC<{}> = () => {
       });
   }, []);
   return (
-    <Scene triggerHook="onLeave" pin duration={3000}>
-      {(progress: number) => {
-        console.log(progress);
-        tl.current.totalProgress(progress / 2);
-        return (
-          <div css={[rootStyle, progress === 0 && hiddenStyle]}>
-            <div css={blackoutWrapperStyle} ref={blackoutWrapperEl} />
+    <div ref={rootEl}>
+      <Scene triggerHook="onLeave" pin duration="200%">
+        {(progress: number) => {
+          tl.current.totalProgress(progress / 2);
+          return (
+            <div css={[rootStyle, progress === 0 && hiddenStyle]}>
+              <div css={blackoutWrapperStyle} ref={blackoutWrapperEl} />
 
-            <h2 ref={textEl} css={titleStyle}>
-              Design is a <br /> Heuristic process
-            </h2>
-          </div>
-        );
-      }}
-    </Scene>
+              <h2 css={titleStyle}>
+                Design is a <br /> Heuristic process
+              </h2>
+            </div>
+          );
+        }}
+      </Scene>
+    </div>
   );
 };
 
@@ -73,7 +77,7 @@ const blackoutWrapperStyle = css`
   --sharpness: 0%;
   z-index: 9;
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   pointer-events: none;
   background: radial-gradient(

@@ -1,12 +1,16 @@
 import { css } from "@emotion/react";
+import { observer } from "mobx-react";
 import { usePageManager } from "../../pages/util";
-import { useCurrentPage } from "../../state/currentPage";
 
-const pages = ["Home", "About", "Skills", "Projects", "Contact me"] as const;
+interface HeaderProps {
+  pages: { label: string; key: string }[];
+}
 
-const Header: React.FC<{}> = () => {
-  const [pageIndex, setPageIndex] = useCurrentPage();
+const Header: React.FC<HeaderProps> = ({ pages }) => {
   const pageManager = usePageManager();
+
+  console.log(pageManager.currentPage());
+
   return (
     <header css={rootStyle}>
       <h2 css={titleStyle}>title</h2>
@@ -14,13 +18,15 @@ const Header: React.FC<{}> = () => {
         {pages.map((page, i) => (
           <li css={itemStyle}>
             <span
-              css={[fontStyle, pageIndex === i && activeFontStyle]}
+              css={[
+                fontStyle,
+                pageManager.currentPage() === i && activeFontStyle,
+              ]}
               onClick={() => {
-                setPageIndex(i);
-                pageManager.goPage("intro");
+                pageManager.goPage(page.key);
               }}
             >
-              {page}
+              {page.label}
             </span>
           </li>
         ))}
@@ -28,7 +34,7 @@ const Header: React.FC<{}> = () => {
     </header>
   );
 };
-export default Header;
+export default observer(Header);
 
 const rootStyle = css`
   position: fixed;

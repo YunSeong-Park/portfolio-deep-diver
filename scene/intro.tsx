@@ -1,17 +1,15 @@
 import { css } from "@emotion/react";
-import { useEffect, useRef } from "react";
+
 import { Tween } from "react-gsap";
-import { Controller, Scene } from "react-scrollmagic";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { Scene } from "react-scrollmagic";
+
 import MoveSpan from "../components/moveSpan/MoveSpan";
-import { Page, usePageManager, useSetPage } from "../pages/util";
+import { PageComponentProps, useSetPage } from "../pages/util";
 
-const key = "intro";
+interface IntroProps extends PageComponentProps {}
 
-interface IntroProps {}
-
-const Intro: React.FC<IntroProps> = () => {
-  const rootEl = useSetPage(key);
+const Intro: React.FC<IntroProps> = ({ pageKey }) => {
+  const rootEl = useSetPage(pageKey);
 
   return (
     <div ref={rootEl}>
@@ -44,7 +42,7 @@ const Intro: React.FC<IntroProps> = () => {
   );
 };
 
-export default { component: Intro, key };
+export default Intro;
 
 const rootStyle = css`
   position: relative;

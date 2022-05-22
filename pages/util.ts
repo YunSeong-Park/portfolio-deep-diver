@@ -1,5 +1,15 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { createContext, useContext, useEffect, useRef } from "react";
+
+export interface PageComponentProps {
+  pageKey: string;
+}
+
+export type PageInfo = {
+  component: React.FC<PageComponentProps>;
+  key: string;
+  label: string;
+};
 
 export const PageManagerContext = createContext<PageManager | null>(null);
 
@@ -14,13 +24,20 @@ export const usePageManager = () => {
 export class PageManager {
   private _pages: (Page | null)[];
   private _pageKeys: string[];
+  private _scrollY: number;
 
   constructor(pageKeys: string[]) {
+    this._scrollY = 0;
     this._pageKeys = pageKeys;
 
     this._pages = new Array(pageKeys.length).fill(null);
 
-    makeAutoObservable(this);
+    makeObservable<PageManager, "_scrollY">(this, {
+      _scrollY: observable,
+      currentPage: observable,
+
+      scrollY: action,
+    });
   }
 
   private _findPageIndex(key: string) {
@@ -42,6 +59,10 @@ export class PageManager {
     return page;
   }
 
+  scrollY(y: number) {
+    this._scrollY = y;
+  }
+
   setPage(key: string, page: Page) {
     const index = this._findPageIndex(key);
 
@@ -52,15 +73,20 @@ export class PageManager {
     this._getPage(key).goEl();
   }
 
-  get currentPage() {
-    const y = window.scrollY;
-    return this._pages.findIndex((page) => {
+  currentPage() {
+    const index = this._pages.findIndex((page, i) => {
       if (page === null) {
-        throw Error("추가되지 않은 page가 있습니다.");
+        return i;
       }
 
-      return y >= page.top;
+      return this._scrollY < page.top;
     });
+
+    if (index === -1) {
+      return this._pages.length - 1;
+    }
+
+    return index - 1;
   }
 }
 
