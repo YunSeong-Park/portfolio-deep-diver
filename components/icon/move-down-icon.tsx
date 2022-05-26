@@ -2,7 +2,7 @@ import { Timeline, Tween } from "react-gsap";
 import Icon from "./icon";
 
 const MoveDownIcon = () => {
-  const amplitude = 3;
+  const amplitude = 4;
   return (
     <Timeline
       repeat={-1}
@@ -12,8 +12,8 @@ const MoveDownIcon = () => {
         </div>
       }
     >
-      <Tween from={{ y: amplitude }} to={{ y: -amplitude }} duration={1.4} />
-      <Tween from={{ y: -amplitude }} to={{ y: amplitude }} duration={1.4} />
+      <Tween from={{ y: amplitude }} to={{ y: -amplitude }} duration={1.3} />
+      <Tween from={{ y: -amplitude }} to={{ y: amplitude }} duration={1.3} />
     </Timeline>
   );
 };
