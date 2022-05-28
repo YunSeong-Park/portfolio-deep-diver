@@ -18,10 +18,11 @@ const Header: React.FC<HeaderProps> = ({ pages }) => {
             <span
               css={[
                 fontStyle,
-                pageManager.currentPage() === i && activeFontStyle,
+                pageManager.currentPage === i && activeFontStyle,
               ]}
               onClick={() => {
                 pageManager.goPage(page.key);
+                pageManager.currentPage = i;
               }}
             >
               {page.label}
@@ -49,11 +50,10 @@ const titleStyle = css``;
 
 const listStyle = css`
   display: flex;
-  gap: 40px;
+  gap: 60px;
 `;
 
 const itemStyle = css`
-  width: 100px;
   height: 22px;
   display: flex;
   justify-content: center;

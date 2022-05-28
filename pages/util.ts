@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { createContext, useContext, useEffect, useRef } from "react";
 
 export interface PageComponentProps {
@@ -25,18 +25,23 @@ export class PageManager {
   private _pages: (Page | null)[];
   private _pageKeys: string[];
   private _scrollY: number;
+  private _currentPage: number;
+  private _isYCurrentPage: boolean;
 
   constructor(pageKeys: string[]) {
     this._scrollY = 0;
     this._pageKeys = pageKeys;
 
     this._pages = new Array(pageKeys.length).fill(null);
+    this._currentPage = 0;
+    this._isYCurrentPage = true;
 
-    makeObservable<PageManager, "_scrollY">(this, {
+    makeObservable<PageManager, "_scrollY" | "_currentPage">(this, {
       _scrollY: observable,
-      currentPage: observable,
-
       scrollY: action,
+
+      _currentPage: observable,
+      currentPage: computed,
     });
   }
 
@@ -59,21 +64,7 @@ export class PageManager {
     return page;
   }
 
-  scrollY(y: number) {
-    this._scrollY = y;
-  }
-
-  setPage(key: string, page: Page) {
-    const index = this._findPageIndex(key);
-
-    this._pages[index] = page;
-  }
-
-  goPage(key: string) {
-    this._getPage(key).goEl();
-  }
-
-  currentPage() {
+  private _getCurrentPageFromY() {
     const index = this._pages.findIndex((page, i) => {
       if (page === null) {
         return i;
@@ -88,16 +79,53 @@ export class PageManager {
 
     return index - 1;
   }
+
+  scrollY(y: number) {
+    this._scrollY = y;
+
+    if (this._isYCurrentPage) this._currentPage = this._getCurrentPageFromY();
+  }
+
+  setPage(key: string, page: Page) {
+    const index = this._findPageIndex(key);
+
+    page.setAfterGoEl(() => {
+      this._isYCurrentPage = true;
+    });
+
+    this._pages[index] = page;
+  }
+
+  goPage(key: string) {
+    this._isYCurrentPage = false;
+    this._getPage(key).goEl();
+  }
+
+  set currentPage(currentPage: number) {
+    this._currentPage = currentPage;
+  }
+
+  get currentPage() {
+    return this._currentPage;
+  }
 }
 
 export class Page {
   private _el: HTMLElement;
+  private _afterGoEl?: () => void;
+
   constructor(el: HTMLElement) {
     this._el = el;
   }
 
   goEl() {
-    this._el.scrollIntoView({ behavior: "smooth" });
+    this._el.scrollIntoViewPromise({ behavior: "smooth" }).then(() => {
+      this._afterGoEl && this._afterGoEl();
+    });
+  }
+
+  setAfterGoEl(afterGoEl: () => void) {
+    this._afterGoEl = afterGoEl;
   }
 
   get top() {

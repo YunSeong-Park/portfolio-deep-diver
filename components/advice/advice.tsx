@@ -8,7 +8,7 @@ const Advice: React.FC<{}> = () => {
   const pageManager = usePageManager();
 
   return (
-    <div css={[adviceStyle, pageManager.currentPage() !== 0 && noneStyle]}>
+    <div css={[adviceStyle, pageManager.currentPage !== 0 && noneStyle]}>
       <WaveSpan text="Scroll to discover" />
       <MoveDownIcon />
     </div>
