@@ -43,7 +43,7 @@ const rootStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 50px 97px;
+  padding: 14px 100px;
 `;
 
 const titleStyle = css``;
