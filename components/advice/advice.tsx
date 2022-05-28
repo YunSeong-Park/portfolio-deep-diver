@@ -8,7 +8,7 @@ const Advice: React.FC<{}> = () => {
   const pageManager = usePageManager();
 
   return (
-    <div css={[adviceStyle, pageManager.currentPage !== 0 && noneStyle]}>
+    <div css={[adviceStyle, !pageManager.isSceneStart && noneStyle]}>
       <WaveSpan text="Scroll to discover" />
       <MoveDownIcon />
     </div>
@@ -24,11 +24,14 @@ const adviceStyle = css`
   display: flex;
   align-items: center;
   gap: 30px;
+  z-index: 999;
   span {
     font-weight: 400;
     font-size: 22px;
   }
+  transition: 0.3s ease-in;
 `;
 const noneStyle = css`
-  display: none;
+  opacity: 0;
+  bottom: 20px;
 `;

@@ -27,6 +27,7 @@ export class PageManager {
   private _scrollY: number;
   private _currentPage: number;
   private _isYCurrentPage: boolean;
+  private _isSceneStart: boolean;
 
   constructor(pageKeys: string[]) {
     this._scrollY = 0;
@@ -35,14 +36,21 @@ export class PageManager {
     this._pages = new Array(pageKeys.length).fill(null);
     this._currentPage = 0;
     this._isYCurrentPage = true;
+    this._isSceneStart = true;
 
-    makeObservable<PageManager, "_scrollY" | "_currentPage">(this, {
-      _scrollY: observable,
-      scrollY: action,
+    makeObservable<PageManager, "_scrollY" | "_currentPage" | "_isSceneStart">(
+      this,
+      {
+        _scrollY: observable,
+        scrollY: action,
 
-      _currentPage: observable,
-      currentPage: computed,
-    });
+        _currentPage: observable,
+        currentPage: computed,
+
+        _isSceneStart: observable,
+        isSceneStart: computed,
+      }
+    );
   }
 
   private _findPageIndex(key: string) {
@@ -83,6 +91,10 @@ export class PageManager {
   scrollY(y: number) {
     this._scrollY = y;
 
+    this._isSceneStart = this._pages.some(
+      (page) => page?.top === this._scrollY
+    );
+
     if (this._isYCurrentPage) this._currentPage = this._getCurrentPageFromY();
   }
 
@@ -107,6 +119,10 @@ export class PageManager {
 
   get currentPage() {
     return this._currentPage;
+  }
+
+  get isSceneStart() {
+    return this._isSceneStart;
   }
 }
 
