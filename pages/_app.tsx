@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             let [entry] = entries;
             if (entry.isIntersecting) {
               debounce(() => {
-                console.log("ge");
                 x();
               }, 300);
             }
