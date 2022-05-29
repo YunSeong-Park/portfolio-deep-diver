@@ -3,6 +3,7 @@ import Icon from "./icon";
 
 const MoveDownIcon = () => {
   const amplitude = 4;
+  const duration = 1.3;
   return (
     <Timeline
       repeat={-1}
@@ -12,8 +13,16 @@ const MoveDownIcon = () => {
         </div>
       }
     >
-      <Tween from={{ y: amplitude }} to={{ y: -amplitude }} duration={1.3} />
-      <Tween from={{ y: -amplitude }} to={{ y: amplitude }} duration={1.3} />
+      <Tween
+        from={{ y: amplitude }}
+        to={{ y: -amplitude }}
+        duration={duration}
+      />
+      <Tween
+        from={{ y: -amplitude }}
+        to={{ y: amplitude }}
+        duration={duration}
+      />
     </Timeline>
   );
 };
