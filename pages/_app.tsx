@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               debounce(() => {
                 console.log("ge");
                 x();
-              }, 900);
+              }, 300);
             }
           });
           intersectionObserver.observe(parent);
