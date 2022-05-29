@@ -55,7 +55,7 @@ const rootStyle = css`
 const phraseStyle = css`
   position: absolute;
   left: 100px;
-  top: 180px;
+  top: 20vh;
 `;
 
 const titleWrapperStyle = css`
