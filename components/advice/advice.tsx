@@ -23,7 +23,7 @@ const adviceStyle = css`
   right: 100px;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 25px;
   z-index: 999;
   span {
     font-weight: 400;
