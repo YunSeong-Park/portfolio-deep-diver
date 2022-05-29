@@ -1,6 +1,8 @@
 const icons = {
   downArrow: "/svg/down-arrow.svg",
   arrow: "/svg/arrow.svg",
+  photoshop: "/svg/photoshop.svg",
+  illustrator: "/svg/illustrator.svg",
 };
 
 interface IconProps {
