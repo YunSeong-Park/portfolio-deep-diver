@@ -19,7 +19,8 @@ const rootStyle = (width: string) => css`
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 100px;
   height: 10px;
-  width: ${width} div {
+  width: ${width};
+  div {
     background-color: rgb(255, 255, 255);
     border-radius: 100px;
     height: 100%;
