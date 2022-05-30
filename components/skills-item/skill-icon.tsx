@@ -1,10 +1,10 @@
 import { css } from "@emotion/react";
 import Icon from "../icon/icon";
 
-type Skill = "photoshop" | "illustrator";
+export type SkillIconType = "photoshop" | "illustrator";
 
 interface SkillIconProps {
-  skill: Skill;
+  skill: SkillIconType;
 }
 
 const SkillIcon: React.FC<SkillIconProps> = ({ skill }) => {
