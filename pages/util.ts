@@ -29,6 +29,9 @@ export class PageManager {
   private _isYCurrentPage: boolean;
   private _isSceneStart: boolean;
 
+  private _contentsPage?: Page;
+  private _contentsCallback?: () => any;
+
   constructor(pageKeys: string[]) {
     this._scrollY = 0;
     this._pageKeys = pageKeys;
@@ -108,6 +111,18 @@ export class PageManager {
     this._pages[index] = page;
   }
 
+  setContentsPage(page: Page) {
+    this._contentsPage = page;
+  }
+
+  attachCallbackContentsPage(callback: () => any) {
+    this._contentsCallback = callback;
+  }
+
+  get contentsCallback() {
+    return this._contentsCallback;
+  }
+
   goPage(key: string) {
     this._isYCurrentPage = false;
     this._getPage(key).goEl();
@@ -160,6 +175,25 @@ export const useSetPage = (key: string) => {
 
     const page = new Page(rootEl.current);
     pageManager.setPage(key, page);
+  }, []);
+
+  return rootEl;
+};
+
+export const useSetContentsPage = () => {
+  const pageManager = usePageManager();
+  const rootEl = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (rootEl.current === null) {
+      return;
+    }
+
+    const page = new Page(rootEl.current);
+    pageManager.setContentsPage(page);
+
+    pageManager.contentsCallback &&
+      pageManager.contentsCallback().to(rootEl.current, { opacity: 1 });
   }, []);
 
   return rootEl;
