@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { Scene } from "react-scrollmagic";
-import { PageComponentProps, useSetPage } from "../pages/util";
+import { PageComponentProps, usePageManager, useSetPage } from "../pages/util";
 import SkillIcon from "../components/skills-item/skill-icon";
 import Icon from "../components/icon/icon";
 import SkillItem from "../components/skills-item/skill-item";
@@ -20,6 +20,7 @@ const Skills: React.FC<SkillProps> = ({ pageKey }) => {
     subTitleEl,
     arrowEl,
     rightEl,
+    lastPhraseEl,
   } = useTween();
 
   const duration = 3000;
@@ -69,6 +70,10 @@ const Skills: React.FC<SkillProps> = ({ pageKey }) => {
                   })}
                 </div>
               </div>
+
+              <div css={lastPhraseStyle} ref={lastPhraseEl}>
+                모든것을 바꿀때까지
+              </div>
             </div>
           );
         }}
@@ -87,6 +92,8 @@ const useTween = () => {
   const arrowEl = useRef<HTMLDivElement>(null);
   const rightEl = useRef<HTMLDivElement>(null);
 
+  const lastPhraseEl = useRef<HTMLDivElement>(null);
+
   const tl = useRef<gsap.core.Timeline>(gsap.timeline({ repeat: 0 }));
 
   useEffect(() => {
@@ -99,7 +106,10 @@ const useTween = () => {
       .to(subTitleEl.current, { fontSize: "130px", lineHeight: "130px" }, "<")
       .to(arrowEl.current, { transform: "rotate(-45deg)" }, "<")
       .to(rightEl.current, { y: -1000, duration: 2 }, "<")
-      .to(tweenRootEl.current, { opacity: 0 });
+      .to(tweenRootEl.current, { opacity: 0 })
+      .from(lastPhraseEl.current, { opacity: 0, y: 50 })
+      .to(lastPhraseEl.current, { y: -100, fontSize: "50px", color: "#000" })
+      .to(lastPhraseEl.current, {});
   }, []);
 
   const setProgress = (progress: number) => {
@@ -114,11 +124,12 @@ const useTween = () => {
     subTitleEl,
     arrowEl,
     rightEl,
+    lastPhraseEl,
   };
 };
 
 const wrapperStyle = (height: number) => css`
-  height: ${height}px;
+  height: ${height - 300}px;
 `;
 
 const rootStyle = css`
@@ -176,11 +187,18 @@ const skillItemWrapperStyle = css`
     position: absolute;
     left: -64px;
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 8px;
     background-color: white;
   }
 `;
 
-const circleItemStyle = css``;
+const lastPhraseStyle = css`
+  position: absolute;
+  top: 320px;
+  width: 100%;
+  text-align: center;
+  font-size: 70px;
+  font-weight: 600;
+`;
