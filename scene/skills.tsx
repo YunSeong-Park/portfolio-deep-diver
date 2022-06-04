@@ -40,37 +40,38 @@ const Skills: React.FC<SkillProps> = ({ pageKey }) => {
                     <Icon icon="arrow" />
                   </div>
                 </div>
-                <div css={rightStyle} ref={rightEl}>
-                  {new Array(5).fill(null).map((_, i) => {
-                    if (i % 2) {
-                      return (
-                        <div css={skillItemWrapperStyle}>
-                          <div></div>
-                          <SkillItem
-                            title="ILLUSTRATOR"
-                            icon="illustrator"
-                            body="With our crew of informed video, audio and editing With our crew of informed."
-                            percent={60}
-                          />
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div css={skillItemWrapperStyle}>
-                          <div></div>
-                          <SkillItem
-                            title="PHOTOSHOP"
-                            icon="photoshop"
-                            body="With our crew of informed video, audio and editing With our crew of informed."
-                            subTitle="고급"
-                          />
-                        </div>
-                      );
-                    }
-                  })}
+                <div css={rightBlurStyle}>
+                  <div css={rightStyle} ref={rightEl}>
+                    {new Array(5).fill(null).map((_, i) => {
+                      if (i % 2) {
+                        return (
+                          <div css={skillItemWrapperStyle}>
+                            <div></div>
+                            <SkillItem
+                              title="ILLUSTRATOR"
+                              icon="illustrator"
+                              body="With our crew of informed video, audio and editing With our crew of informed."
+                              percent={60}
+                            />
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div css={skillItemWrapperStyle}>
+                            <div></div>
+                            <SkillItem
+                              title="PHOTOSHOP"
+                              icon="photoshop"
+                              body="With our crew of informed video, audio and editing With our crew of informed."
+                              subTitle="고급"
+                            />
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
                 </div>
               </div>
-
               <div css={lastPhraseStyle} ref={lastPhraseEl}>
                 모든것을 바꿀때까지
               </div>
@@ -167,6 +168,22 @@ const iconStyle = css`
   bottom: 30px;
   right: 0;
   transform: rotate(0deg);
+`;
+
+const rightBlurStyle = css`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0px;
+  height: 100vh;
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 `;
 
 const rightStyle = css`
