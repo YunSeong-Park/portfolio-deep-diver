@@ -102,7 +102,7 @@ const useTween = () => {
       .to(rootEl.current, {
         opacity: 1,
       })
-      .to(firstEl.current, { y: -100, opacity: 0 })
+      .to(firstEl.current, { y: -100, opacity: 0, duration: 0.3 })
       .to(secondEl.current, { top: "50px" }, "<")
       .to(rootEl.current, { opacity: 0 });
   }, []);
