@@ -45,6 +45,52 @@
   font-weight: 100;
 }
 
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-Black.ttf) format("opentype");
+  font-weight: 900;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-ExtraBlack.ttf) format("opentype");
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-Bold.ttf) format("opentype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-SemiBold.ttf) format("opentype");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-Regular.ttf) format("opentype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-Light.ttf) format("opentype");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-UltraLight.ttf) format("opentype");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Neue Plak";
+  src: url(/fonts/Neue-Plak-Thin.ttf) format("opentype");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Michroma";
+  src: url(/fonts/Michroma-Regular.ttf) format("opentype");
+  font-weight: 400;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -56,4 +102,7 @@ a {
   margin: 0;
   font-family: "Pretendard";
   color: #fff;
+}
+body {
+  background-color: black;
 }
