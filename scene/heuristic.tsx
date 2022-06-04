@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { Scene } from "react-scrollmagic";
+import StaticBackground from "../components/background/static-background";
 import { PageComponentProps, useSetPage } from "../pages/util";
 
 interface HeuristicProps extends PageComponentProps {}
@@ -21,6 +22,7 @@ const Heuristic: React.FC<HeuristicProps> = ({ pageKey }) => {
           return (
             <div css={[rootStyle, [0, 1].includes(progress) && hiddenStyle]}>
               <div css={blackoutWrapperStyle} ref={blackoutWrapperEl} />
+              <StaticBackground scene="heuristic" />
 
               <h2 css={titleStyle}>
                 Design is a <br /> Heuristic process
