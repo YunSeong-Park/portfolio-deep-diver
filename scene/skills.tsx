@@ -181,7 +181,7 @@ const rightBlurStyle = css`
     to top,
     transparent 0%,
     black 20%,
-    black 80%,
+    black 70%,
     transparent 100%
   );
 `;
