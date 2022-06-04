@@ -1,7 +1,9 @@
 import { css } from "@emotion/react";
-
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import { Tween } from "react-gsap";
 import { Scene } from "react-scrollmagic";
+import StaticBackground from "../components/background/static-background";
 
 import MoveSpan from "../components/moveSpan/MoveSpan";
 import { PageComponentProps, useSetPage } from "../pages/util";
@@ -11,35 +13,60 @@ interface IntroProps extends PageComponentProps {}
 const Intro: React.FC<IntroProps> = ({ pageKey }) => {
   const rootEl = useSetPage(pageKey);
 
+  const { backgroundEl, setProgress } = useBackgroundTween();
   const duration = 300;
 
   return (
     <div ref={rootEl} css={wrapperStyle(duration)}>
       <Scene triggerHook="onLeave" pin duration={duration}>
-        {(progress: number) => (
-          <div css={rootStyle}>
-            <Tween
-              to={{ opacity: 0, y: "-100px" }}
-              paused
-              totalProgress={progress}
-            >
-              <div css={phraseStyle}>
-                <p css={subTitleStyle}>
-                  "The Standard <br /> of completion in out opinion"
-                </p>
-                <div css={titleWrapperStyle}>
-                  <span css={titleStyle}>
-                    <MoveSpan text="Deep " fontSize="154px" />
-                    <span> &nbsp;Diver</span>
-                  </span>
+        {(progress: number) => {
+          setProgress(progress);
+          return (
+            <div css={rootStyle}>
+              <StaticBackground ref={backgroundEl} scene="intro" />
+              <Tween
+                to={{ opacity: 0, y: "-100px" }}
+                paused
+                totalProgress={progress}
+              >
+                <div css={phraseStyle}>
+                  <p css={subTitleStyle}>
+                    "The Standard <br /> of completion in out opinion"
+                  </p>
+                  <div css={titleWrapperStyle}>
+                    <span css={titleStyle}>
+                      <MoveSpan text="Deep " fontSize="154px" />
+                      <span> &nbsp;Diver</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Tween>
-          </div>
-        )}
+              </Tween>
+            </div>
+          );
+        }}
       </Scene>
     </div>
   );
+};
+
+const useBackgroundTween = () => {
+  const backgroundEl = useRef<HTMLImageElement>(null);
+
+  const tl = useRef<gsap.core.Timeline>(gsap.timeline({ repeat: 0 }));
+
+  useEffect(() => {
+    tl.current.pause();
+
+    tl.current.to(backgroundEl.current, {
+      opacity: 0,
+    });
+  }, []);
+
+  const setProgress = (progress: number) => {
+    tl.current.progress(progress);
+  };
+
+  return { backgroundEl, setProgress };
 };
 
 export default Intro;
