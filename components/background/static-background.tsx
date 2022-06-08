@@ -5,7 +5,6 @@ const scenes = {
   career: "/img/career_bg.png",
   heuristic: "/img/heuristic_bg.png",
   intro: "/img/intro_bg.png",
-  skill: "/img/skills_bg.png",
 };
 
 interface StaticBackgroundProps {
