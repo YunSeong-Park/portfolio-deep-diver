@@ -6,6 +6,8 @@ import { PageComponentProps, usePageManager, useSetPage } from "../pages/util";
 import SkillIcon from "../components/skills-item/skill-icon";
 import Icon from "../components/icon/icon";
 import SkillItem from "../components/skills-item/skill-item";
+import StaticBackground from "../components/background/static-background";
+import ScrollBackground from "../components/background/scroll-background";
 
 interface SkillProps extends PageComponentProps {}
 
@@ -32,6 +34,7 @@ const Skills: React.FC<SkillProps> = ({ pageKey }) => {
           setProgress(progress);
           return (
             <div css={rootStyle}>
+              <ScrollBackground progress={progress} scene="skill" />
               <div css={tweenRootStyle} ref={tweenRootEl}>
                 <div css={leftTitle} ref={leftTitleEl}>
                   <h2 ref={mainTitleEl}>SKILLS</h2>
