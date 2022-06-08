@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { Scene } from "react-scrollmagic";
 import gsap from "gsap";
 import { PageComponentProps, useSetPage } from "../pages/util";
+import StaticBackground from "../components/background/static-background";
 
 interface CareerProps extends PageComponentProps {}
 
@@ -21,6 +22,7 @@ const Career: React.FC<CareerProps> = ({ pageKey }) => {
           return (
             <div css={rootStyle}>
               <div style={{ opacity: 0 }} ref={rootEl}>
+                <StaticBackground scene="career" />
                 <p css={paragaphStyle} ref={firstEl}>
                   We believe that good design is powerful,
                   <br />
