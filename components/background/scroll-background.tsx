@@ -1,4 +1,6 @@
 import { css } from "@emotion/react";
+import { forwardRef } from "react";
+import { Tween } from "react-gsap";
 
 const scenes = {
   skill: {
@@ -13,18 +15,32 @@ interface ScrollBackgroundProps {
   progress: number;
 }
 
-const ScrollBackground: React.FC<ScrollBackgroundProps> = ({
-  scene,
-  progress,
-}) => {
-  return <img css={rootStyle(scene, progress)} src={scenes[scene].url} />;
-};
+const ScrollBackground = forwardRef<HTMLDivElement, ScrollBackgroundProps>(
+  ({ scene, progress }, ref) => {
+    return (
+      <div ref={ref} css={rootStyle}>
+        <Tween
+          to={{ y: -scenes[scene].height + 800 }}
+          paused
+          totalProgress={progress}
+        >
+          <img src={scenes[scene].url} />
+        </Tween>
+      </div>
+    );
+  }
+);
 
 export default ScrollBackground;
 
-const rootStyle = (scene: keyof typeof scenes, progress: number) => css`
-  position: fixed;
-  height: ${scenes[scene].height}px;
-  width: ${scenes[scene].width}px;
-  transform: translateY(${-scenes[scene].height * (progress * 0.9)}px);
+const rootStyle = css`
+  position: absolute;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  //overflow: hidden;
+  img {
+    width: 1920px;
+    height: 5000px;
+  }
 `;
