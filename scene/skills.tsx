@@ -3,10 +3,8 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { Scene } from "react-scrollmagic";
 import { PageComponentProps, usePageManager, useSetPage } from "../pages/util";
-import SkillIcon from "../components/skills-item/skill-icon";
 import Icon from "../components/icon/icon";
 import SkillItem from "../components/skills-item/skill-item";
-import StaticBackground from "../components/background/static-background";
 import ScrollBackground from "../components/background/scroll-background";
 
 interface SkillProps extends PageComponentProps {}
@@ -23,66 +21,72 @@ const Skills: React.FC<SkillProps> = ({ pageKey }) => {
     arrowEl,
     rightEl,
     lastPhraseEl,
+    backgroundEl,
   } = useTween();
 
   const duration = 3000;
   return (
-    <div ref={rootEl} css={wrapperStyle(duration)}>
-      <Scene pin duration={duration} triggerHook="onLeave">
-        {(progress: number) => {
-          console.log(progress);
-          setProgress(progress);
-          return (
-            <div css={rootStyle}>
-              <ScrollBackground progress={progress} scene="skill" />
-              <div css={tweenRootStyle} ref={tweenRootEl}>
-                <div css={leftTitle} ref={leftTitleEl}>
-                  <h2 ref={mainTitleEl}>SKILLS</h2>
-                  <h3 ref={subTitleEl}>EXPERIENCE.</h3>
-                  <div ref={arrowEl} css={iconStyle}>
-                    <Icon icon="arrow" />
+    <>
+      <div ref={rootEl} css={wrapperStyle(duration)}>
+        <Scene pin duration={duration} triggerHook="onLeave">
+          {(progress: number) => {
+            setProgress(progress);
+            return (
+              <div css={rootStyle}>
+                <ScrollBackground
+                  ref={backgroundEl}
+                  progress={progress}
+                  scene="skill"
+                />
+                <div css={tweenRootStyle} ref={tweenRootEl}>
+                  <div css={leftTitle} ref={leftTitleEl}>
+                    <h2 ref={mainTitleEl}>SKILLS</h2>
+                    <h3 ref={subTitleEl}>EXPERIENCE.</h3>
+                    <div ref={arrowEl} css={iconStyle}>
+                      <Icon icon="arrow" />
+                    </div>
+                  </div>
+                  <div css={rightBlurStyle}>
+                    <div css={rightStyle} ref={rightEl}>
+                      {new Array(5).fill(null).map((_, i) => {
+                        if (i % 2) {
+                          return (
+                            <div css={skillItemWrapperStyle}>
+                              <div></div>
+                              <SkillItem
+                                title="ILLUSTRATOR"
+                                icon="illustrator"
+                                body="With our crew of informed video, audio and editing With our crew of informed."
+                                percent={60}
+                              />
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div css={skillItemWrapperStyle}>
+                              <div></div>
+                              <SkillItem
+                                title="PHOTOSHOP"
+                                icon="photoshop"
+                                body="With our crew of informed video, audio and editing With our crew of informed."
+                                subTitle="고급"
+                              />
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
                   </div>
                 </div>
-                <div css={rightBlurStyle}>
-                  <div css={rightStyle} ref={rightEl}>
-                    {new Array(5).fill(null).map((_, i) => {
-                      if (i % 2) {
-                        return (
-                          <div css={skillItemWrapperStyle}>
-                            <div></div>
-                            <SkillItem
-                              title="ILLUSTRATOR"
-                              icon="illustrator"
-                              body="With our crew of informed video, audio and editing With our crew of informed."
-                              percent={60}
-                            />
-                          </div>
-                        );
-                      } else {
-                        return (
-                          <div css={skillItemWrapperStyle}>
-                            <div></div>
-                            <SkillItem
-                              title="PHOTOSHOP"
-                              icon="photoshop"
-                              body="With our crew of informed video, audio and editing With our crew of informed."
-                              subTitle="고급"
-                            />
-                          </div>
-                        );
-                      }
-                    })}
-                  </div>
+                <div css={lastPhraseStyle} ref={lastPhraseEl}>
+                  모든것을 바꿀때까지
                 </div>
               </div>
-              <div css={lastPhraseStyle} ref={lastPhraseEl}>
-                모든것을 바꿀때까지
-              </div>
-            </div>
-          );
-        }}
-      </Scene>
-    </div>
+            );
+          }}
+        </Scene>
+      </div>
+    </>
   );
 };
 
@@ -90,6 +94,7 @@ export default Skills;
 
 const useTween = () => {
   const tweenRootEl = useRef<HTMLDivElement>(null);
+  const backgroundEl = useRef<HTMLDivElement>(null);
   const leftTitleEl = useRef<HTMLDivElement>(null);
   const mainTitleEl = useRef<HTMLHeadingElement>(null);
   const subTitleEl = useRef<HTMLHeadingElement>(null);
@@ -105,6 +110,7 @@ const useTween = () => {
 
     tl.current
       .to(tweenRootEl.current, { opacity: 1 })
+      .to(backgroundEl.current, { opacity: 1 }, "<")
       .to(leftTitleEl.current, { y: -50 })
       .to(mainTitleEl.current, { fontSize: "140px", lineHeight: "140px" }, "<")
       .to(subTitleEl.current, { fontSize: "130px", lineHeight: "130px" }, "<")
@@ -113,7 +119,7 @@ const useTween = () => {
       .to(tweenRootEl.current, { opacity: 0 })
       .from(lastPhraseEl.current, { opacity: 0, y: 50 })
       .to(lastPhraseEl.current, { y: -100, fontSize: "50px", color: "#000" })
-      .to(lastPhraseEl.current, {});
+      .to(backgroundEl.current, {});
   }, []);
 
   const setProgress = (progress: number) => {
@@ -129,11 +135,13 @@ const useTween = () => {
     arrowEl,
     rightEl,
     lastPhraseEl,
+    backgroundEl,
   };
 };
 
 const wrapperStyle = (height: number) => css`
-  height: ${height - 300}px;
+  height: ${height - 800}px;
+  overflow: hidden;
 `;
 
 const rootStyle = css`
