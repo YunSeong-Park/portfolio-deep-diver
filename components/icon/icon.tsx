@@ -3,6 +3,7 @@ const icons = {
   arrow: "/svg/arrow.svg",
   photoshop: "/svg/photoshop.svg",
   illustrator: "/svg/illustrator.svg",
+  circleArrow: "/svg/circle-arrow.svg",
 };
 
 interface IconProps {
@@ -10,7 +11,7 @@ interface IconProps {
 }
 
 const Icon: React.FC<IconProps> = ({ icon }) => {
-  return <object data={icons[icon]} type="image/svg+xml"></object>;
+  return <img src={icons[icon]}></img>;
 };
 
 export default Icon;
