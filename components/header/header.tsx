@@ -3,22 +3,27 @@ import { observer } from "mobx-react";
 import { usePageManager } from "../../pages/util";
 
 interface HeaderProps {
-  pages: { label: string; key: string }[];
+  pages: { label: string; key: string; isContents?: boolean }[];
+  theme?: "primary" | "secondary";
 }
 
-const Header: React.FC<HeaderProps> = ({ pages }) => {
+const Header: React.FC<HeaderProps> = ({ pages, theme = "primary" }) => {
   const pageManager = usePageManager();
 
   return (
-    <header css={rootStyle}>
-      <h2 css={titleStyle}>title</h2>
+    <header css={rootStyle(theme)}>
+      <h2 css={titleStyle}></h2>
       <ul css={listStyle}>
         {pages.map((page, i) => (
           <li css={itemStyle} key={page.key}>
             <span
               css={[
                 fontStyle,
-                pageManager.currentPage === i && activeFontStyle,
+                colorStyle[theme],
+                pageManager.currentPage === i && [
+                  activeFontStyle,
+                  activeColorStyle[theme],
+                ],
               ]}
               onClick={() => {
                 pageManager.goPage(page.key);
@@ -35,15 +40,18 @@ const Header: React.FC<HeaderProps> = ({ pages }) => {
 };
 export default observer(Header);
 
-const rootStyle = css`
-  position: fixed;
+const paddingHeight = 14;
+const itemHeight = 22;
+
+const rootStyle = (theme: "primary" | "secondary") => css`
+  position: ${theme === "primary" ? "fixed" : "absolute"};
   z-index: 999;
   width: 100%;
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 100px;
+  padding: ${paddingHeight}px 100px;
 `;
 
 const titleStyle = css``;
@@ -54,7 +62,7 @@ const listStyle = css`
 `;
 
 const itemStyle = css`
-  height: 22px;
+  height: ${itemHeight}px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,14 +71,12 @@ const itemStyle = css`
 const fontStyle = css`
   position: relative;
   text-align: center;
-  color: #a0a0a0;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
 `;
 
 const activeFontStyle = css`
-  color: #fff;
   :after {
     content: "";
     display: inline-block;
@@ -79,6 +85,29 @@ const activeFontStyle = css`
     left: 0px;
     width: 100%;
     height: 2px;
-    background-color: #fff;
   }
 `;
+
+const colorStyle = {
+  primary: css`
+    color: #a0a0a0;
+  `,
+  secondary: css`
+    color: #000;
+  `,
+};
+
+const activeColorStyle = {
+  primary: css`
+    color: #fff;
+    :after {
+      background-color: #fff;
+    }
+  `,
+  secondary: css`
+    color: #5786ff;
+    :after {
+      background-color: #5786ff;
+    }
+  `,
+};
