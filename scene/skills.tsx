@@ -118,7 +118,7 @@ const useTween = () => {
       .to(rightEl.current, { y: -1000, duration: 2 }, "<")
       .to(tweenRootEl.current, { opacity: 0 })
       .from(lastPhraseEl.current, { opacity: 0, y: 50 })
-      .to(lastPhraseEl.current, { y: -100, fontSize: "50px", color: "#000" })
+      .to(lastPhraseEl.current, { y: -100, fontSize: "50px" })
       .to(backgroundEl.current, {});
   }, []);
 
@@ -140,7 +140,7 @@ const useTween = () => {
 };
 
 const wrapperStyle = (height: number) => css`
-  height: ${height - 800}px;
+  height: ${height - 300}px;
   overflow: hidden;
 `;
 

@@ -15,12 +15,13 @@ interface ScrollBackgroundProps {
   progress: number;
 }
 
+// eslint-disable-next-line react/display-name
 const ScrollBackground = forwardRef<HTMLDivElement, ScrollBackgroundProps>(
   ({ scene, progress }, ref) => {
     return (
       <div ref={ref} css={rootStyle}>
         <Tween
-          to={{ y: -scenes[scene].height + 800 }}
+          to={{ y: -scenes[scene].height + 1000 }}
           paused
           totalProgress={progress}
         >
