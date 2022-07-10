@@ -31,12 +31,12 @@ const Intro: React.FC<IntroProps> = ({ pageKey }) => {
               >
                 <div css={phraseStyle}>
                   <p css={subTitleStyle}>
-                    "The Standard <br /> of completion in out opinion"
+                    &quot;The Standard <br /> of completion in out opinion&quot;
                   </p>
                   <div css={titleWrapperStyle}>
                     <span css={titleStyle}>
-                      <MoveSpan text="Deep " fontSize="154px" />
-                      <span> &nbsp;Diver</span>
+                      <MoveSpan text="DEEP " fontSize="154px" />
+                      <span> &nbsp;DIVER</span>
                     </span>
                   </div>
                 </div>
@@ -80,20 +80,27 @@ const rootStyle = css`
 `;
 
 const phraseStyle = css`
+  font-family: "Michroma";
   position: absolute;
   left: 100px;
   top: 20vh;
 `;
 
 const titleWrapperStyle = css`
+  font-family: "Michroma";
+  -webkit-text-stroke: 6px #fff;
   position: relative;
   display: inline-block;
 `;
 
 const titleStyle = css`
+  font-family: "Michroma";
   display: flex;
   font-size: 154px;
   font-weight: 400;
+  span {
+    font-family: "Michroma";
+  }
 
   :after {
     content: "";
@@ -108,6 +115,8 @@ const titleStyle = css`
 `;
 
 const subTitleStyle = css`
+  font-family: "Michroma";
+
   font-weight: 400;
   font-size: 68px;
   line-height: 97px;
