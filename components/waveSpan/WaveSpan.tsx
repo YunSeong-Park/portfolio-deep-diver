@@ -19,7 +19,7 @@ const WaveSpan: React.FC<WaveSpanProps> = ({ text }) => {
 
     Array.from(rootEl.current.children).map((charEl, i) => {
       tl.current.to(charEl, { opacity: 1, duration: 0.2 }, ">-0.33");
-      tl.current.to(charEl, { opacity: 0.7, duration: 0.2 }, ">");
+      tl.current.to(charEl, { opacity: 0.4, duration: 0.2 }, ">");
     });
   }, []);
 
@@ -32,7 +32,7 @@ const WaveSpan: React.FC<WaveSpanProps> = ({ text }) => {
         font-size: 22px;
         font-weight: 400;
         > div {
-          opacity: 0.7;
+          opacity: 0.4;
           min-width: 7px;
         }
       `}
