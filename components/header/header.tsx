@@ -45,7 +45,7 @@ const itemHeight = 22;
 
 const rootStyle = (theme: "primary" | "secondary") => css`
   position: ${theme === "primary" ? "fixed" : "absolute"};
-  z-index: 999;
+  z-index: ${theme === "primary" ? 999 : 2000};
   width: 100%;
   background-color: transparent;
   display: flex;
@@ -90,7 +90,8 @@ const activeFontStyle = css`
 
 const colorStyle = {
   primary: css`
-    color: #a0a0a0;
+    color: #fff;
+    opacity: 0.3;
   `,
   secondary: css`
     color: #000;
@@ -100,6 +101,7 @@ const colorStyle = {
 const activeColorStyle = {
   primary: css`
     color: #fff;
+    opacity: 1;
     :after {
       background-color: #fff;
     }
