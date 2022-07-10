@@ -13,9 +13,9 @@ const MoveSpan: React.FC<MoveSpanProps> = ({ text, fontSize }) => {
         repeat={-1}
         target={
           <div>
-            <p css={fontStyle(fontSize)}>
+            <span css={fontStyle(fontSize)}>
               {text} <br /> {text}
-            </p>
+            </span>
           </div>
         }
       >
@@ -35,4 +35,5 @@ const wrapperStyle = (fontSize: string) => css`
 `;
 const fontStyle = (fontSize: string) => css`
   font-size: ${fontSize};
+  -webkit-text-stroke: 6px #fff;
 `;
